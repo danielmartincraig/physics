@@ -1,7 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const path = require('path');
 const { Pool } = require('pg');
 const { sanitizeBody } = require('express-validator/filter');
@@ -55,10 +55,10 @@ app.get('/sim', handleTrajectoriesRequest)
 
         pool.query(myInsert, function (err, result) {
             if (err) {
-                throw err;
-            }});
 
-        handleTrajectoriesRequest()
+            }
+            handleTrajectoriesRequest(req, res);
+        });
     });
 
 
@@ -69,10 +69,12 @@ function handleTrajectoriesRequest(req, res) {
 
     pool.query(trajectoriesQuery, function (err, result) {
         if (err) {
-            throw err;
+
+        }
+        else {
+            app.locals.trajectories = result.rows;
         }
 
-        app.locals.trajectories = result.rows;
         res.render('physics/sim');
     });
 }
@@ -99,6 +101,4 @@ function handleQuotesRequest(req, res) {
         app.locals.quotes = result.rows;
         res.render('physics/quotes');
     });
-
-
 }

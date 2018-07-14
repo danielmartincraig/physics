@@ -9,14 +9,21 @@
 
 <h1>Physics Simulation!</h1>
 
-<div><canvas id="simCanvas" width="600" height="400">
+<% let canvasWidth=600;
+   let canvasHeight=400; %>
+
+<div><canvas id="simCanvas" width=<%canvasWidth%> height=<%canvasHeight%>>
+
     </canvas></div>
 
 <script>
     let myCanvas = document.getElementById("simCanvas");
     let ctx = myCanvas.getContext("2d");
-    ctx.moveTo(0,400);
-    ctx.lineTo(600, 0);
+
+    let x = 0;
+    let y = 0;
+
+    ctx.rect(x,y,20,20);
     ctx.stroke();
 </script>
 
@@ -44,12 +51,16 @@
     });
 </script>
 
-<div id="trajectoryHistory"></div>
-
-<% trajectories.forEach(function(entry) { %>
-<h1><%= entry["shot_angle"] %></h1>
-<p><%= entry["shot_velocity"] %></p>
-<% }) %>
-
+<div id="trajectoryHistory">
+    <table>
+        <% trajectories.forEach(function(entry) { %>
+        <tr>
+            <td><input type="checkbox"></td>
+            <td><%= entry["shot_angle"] %></td>
+            <td><%= entry["shot_velocity"] %></td>
+        </tr>
+        <% }) %>
+    </table>
+</div>
 </body>
 </html>
