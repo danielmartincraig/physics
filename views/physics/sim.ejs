@@ -44,5 +44,12 @@
     });
 </script>
 
+<div id="trajectoryHistory"></div>
+
+<% trajectories.forEach(function(entry) { %>
+<h1><%= entry["shot_angle"] %></h1>
+<p><%= entry["shot_velocity"] %></p>
+<% }) %>
+
 </body>
 </html>

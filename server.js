@@ -20,7 +20,7 @@ app.get('/', (req, res) => res.render('physics/index'))
     .get('/highscores', handleHighScoresRequest)
     .get('/quotes', handleQuotesRequest);
 
-app.get('/sim', (req, res) => res.render('physics/sim'))
+app.get('/sim', handleTrajectoriesRequest)
     .post('/sim', (req, res) => {
         console.log("Hello");
         /*sanitizeBody(req.body, (req, res, next) => {
@@ -58,19 +58,24 @@ app.get('/sim', (req, res) => res.render('physics/sim'))
                 throw err;
             }});
 
-        let trajectoriesQuery = "SELECT shot_angle, shot_velocity FROM trajectories";
-
-        pool.query(trajectoriesQuery, function (err, result) {
-            if (err) {
-                throw err;
-            }
-
-            app.locals.trajectories = result.rows;
-            res.render('physics/sim');
-    })});
+        handleTrajectoriesRequest()
+    });
 
 
 app.listen(PORT);
+
+function handleTrajectoriesRequest(req, res) {
+    let trajectoriesQuery = "SELECT shot_angle, shot_velocity FROM trajectories LIMIT 10";
+
+    pool.query(trajectoriesQuery, function (err, result) {
+        if (err) {
+            throw err;
+        }
+
+        app.locals.trajectories = result.rows;
+        res.render('physics/sim');
+    });
+}
 
 function handleHighScoresRequest(req, res) {
     let highScoresQuery = "SELECT final_distance, player_initials FROM highscores h INNER JOIN trajectories t " +
