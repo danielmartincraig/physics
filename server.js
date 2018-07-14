@@ -1,4 +1,5 @@
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 const PORT = process.env.PORT;
 const path = require('path');
@@ -8,13 +9,25 @@ const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
 
 app.use(express.static(path.join(__dirname, 'public')))
+    .use(bodyParser.json())
+    .use(bodyParser.urlencoded({extended: true}))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.render('physics/index'))
-    .get('/sim', (req, res) => res.render('physics/sim'))
     .get('/highscores', handleHighScoresRequest)
     .get('/quotes', handleQuotesRequest);
+
+app.get('/sim', (req, res) => res.render('physics/sim'))
+    .post('/sim', (req, res) => {
+        let launchAngle = req.body.launchAngle,
+            velocity = req.body.velocity;
+        res.render('physics/sim', {
+            launchAngle: launchAngle,
+            velocity: velocity
+        })
+    });
+
 
 app.listen(PORT);
 
