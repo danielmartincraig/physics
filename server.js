@@ -7,6 +7,6 @@ app.use(express.static(path.join(__dirname, 'public')))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs');
 
-app.get('/', (req, res) => res.render('home/index'));
+app.get('/', (req, res) => res.render('physics/index'));
 
 app.listen(PORT);
