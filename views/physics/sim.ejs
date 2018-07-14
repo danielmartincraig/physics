@@ -2,6 +2,8 @@
 <html>
 <head>
     <% include ../partials/header.ejs %>
+
+
 </head>
 <body>
 <% include ../partials/nav.ejs %>
@@ -9,6 +11,14 @@
 <div><canvas id="simCanvas" width="600" height="400">
 
     </canvas></div>
+
+<script>
+    let myCanvas = document.getElementById("simCanvas");
+    let ctx = myCanvas.getContext("2d");
+    ctx.moveTo(0,400);
+    ctx.lineTo(600, 0);
+    ctx.stroke();
+</script>
 
 
 </body>
