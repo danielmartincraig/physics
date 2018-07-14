@@ -8,6 +8,10 @@
 
 <h1>High Scores!</h1>
 
+<% highscores.forEach(function(entry) { %>
+<h1><%= entry["final_distance"] %></h1>
+<p><%= entry["player_initials"] %></p>
+<% }) %>
 
 </body>
 </html>
