@@ -25,3 +25,6 @@
 .jumbotron .lang-logo img {
     max-width: 100%; }
 
+#simCanvas {
+    border: solid black 5px;
+}
