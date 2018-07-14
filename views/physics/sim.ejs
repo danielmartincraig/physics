@@ -2,6 +2,7 @@
 <html>
 <head>
     <% include ../partials/header.ejs %>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 </head>
 <body>
 <% include ../partials/nav.ejs %>
@@ -9,7 +10,6 @@
 <h1>Physics Simulation!</h1>
 
 <div><canvas id="simCanvas" width="600" height="400">
-
     </canvas></div>
 
 <script>
@@ -20,11 +20,29 @@
     ctx.stroke();
 </script>
 
-<form action="" method="post">
+<form>
     Launch Angle: <input type="text" id="launchAngle" placeholder="45">
     Velocity: <input type="text" id="velocity" placeholder="50">
-    <button>LAUNCH!</button>
+    <button id="launchButton">LAUNCH!</button>
 </form>
+
+<script>
+    let launchButton = document.getElementById("launchButton");
+    launchButton.addEventListener('click', function(e) {
+        console.log("The launch button has been clicked");
+
+        e.preventDefault();
+        let launchAngle = document.getElementById("launchAngle").value;
+        let velocity = document.getElementById("velocity").value;
+
+        let request = new XMLHttpRequest();
+
+        request.open("post", "https://agile-depths-52131.herokuapp.com/sim", true);
+        request.setRequestHeader("Content-type", "application/json");
+        let data = JSON.stringify({"launchAngle":launchAngle, "velocity": velocity});
+        request.send(data);
+    });
+</script>
 
 </body>
 </html>

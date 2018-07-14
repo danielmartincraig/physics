@@ -6,14 +6,14 @@ CREATE TABLE trajectories
 ( id SERIAL PRIMARY KEY
 , shot_angle INTEGER
 , shot_velocity INTEGER
-, duration INTEGER
-, final_distance INTEGER
 );
 
 CREATE TABLE highscores
 ( id SERIAL PRIMARY KEY
 , trajectory_id INTEGER REFERENCES trajectories(id)
 , player_initials VARCHAR(3)
+, duration INTEGER
+, final_distance INTEGER
 );
 
 CREATE TABLE quotes

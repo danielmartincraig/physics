@@ -4,6 +4,8 @@ const app = express();
 const PORT = process.env.PORT;
 const path = require('path');
 const { Pool } = require('pg');
+const { sanitizeBody } = require('express-validator/filter');
+const { body,validationResult } = require('express-validator/check');
 
 const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
@@ -20,13 +22,52 @@ app.get('/', (req, res) => res.render('physics/index'))
 
 app.get('/sim', (req, res) => res.render('physics/sim'))
     .post('/sim', (req, res) => {
-        let launchAngle = req.body.launchAngle,
-            velocity = req.body.velocity;
-        res.render('physics/sim', {
-            launchAngle: launchAngle,
-            velocity: velocity
-        })
-    });
+        console.log("Hello");
+        /*sanitizeBody(req.body, (req, res, next) => {
+            const errors = validationResult(req);
+
+            if (!errors.isEmpty()) {
+                //there are errors
+                console.log("There are errors");
+            }
+            else {
+                let velocity = req.body.velocity;
+                let launchAngle = req.body.launchAngle;
+
+                console.log("Velocity = " + velocity);
+
+                let myInsert = `INSERT INTO trajectories (shot_angle, shot_velocity) VALUES ( ${launchAngle}, ${velocity})`;
+                console.log(myInsert);
+
+                pool.query(myInsert, function (err, result) {
+                    if (err) {
+                        throw err;
+                    }
+                })
+            }
+        }).escape();*/
+
+        let velocity = encodeURI(req.body.velocity);
+        let launchAngle = encodeURI(req.body.launchAngle);
+
+        let myInsert = `INSERT INTO trajectories (shot_angle, shot_velocity) VALUES ( ${launchAngle}, ${velocity})`;
+        console.log(myInsert);
+
+        pool.query(myInsert, function (err, result) {
+            if (err) {
+                throw err;
+            }});
+
+        let trajectoriesQuery = "SELECT shot_angle, shot_velocity FROM trajectories";
+
+        pool.query(trajectoriesQuery, function (err, result) {
+            if (err) {
+                throw err;
+            }
+
+            app.locals.trajectories = result.rows;
+            res.render('physics/sim');
+    })});
 
 
 app.listen(PORT);
