@@ -3,6 +3,7 @@
 <head>
     <% include ../partials/header.ejs %>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+
 </head>
 <body>
 <% include ../partials/nav.ejs %>
@@ -17,15 +18,34 @@
     let myCanvas = document.getElementById("simCanvas");
     let canvasHeight = myCanvas.clientHeight;
     let canvasWidth = myCanvas.clientWidth;
-
+    let squareSize = 20;
     let ctx = myCanvas.getContext("2d");
 
-    let squareSize = 20;
-    let x = 0;
-    let y = squareSize;
+    class projectile {
+        constructor (x, y, vx, vy, squareSize) {
+            this.x = x;
+            this.y = y
+            this.vx = vx;
+            this.vy = vy;
+            this.squareSize = squareSize
+        }
 
-    ctx.rect(x, (canvasHeight - y), squareSize, squareSize);
-    ctx.stroke();
+        advance() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy -= 9.8;
+        }
+    }
+
+    let myProjectile = new projectile(20, (canvasHeight - squareSize - 20), 5, 5, 20);
+
+    while (myProjectile.y >= 0) {
+        ctx.rect(myProjectile.x, myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
+        ctx.stroke();
+    }
+
+
+
 </script>
 
 <form>
