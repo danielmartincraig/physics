@@ -5,17 +5,16 @@
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
     <script>
-        function plotTrajectory(launchAngle, velocity) {
-            let myCanvas = document.getElementById("simCanvas");
-            let canvasHeight = myCanvas.clientHeight;
-            let ctx = myCanvas.getContext("2d");
-
+        function plotTrajectory(ctx, launchAngle, velocity) {
             let xVelocity = Math.cos(launchAngle * Math.PI / 180) * velocity;
-            let yVelocity = Math.cos(launchAngle * Math.PI / 180) * velocity;
+            let yVelocity = Math.sin(launchAngle * Math.PI / 180) * velocity;
 
-            let myProjectile = new projectile(xVelocity, yVelocity, 10);
+            let canvasHeight = ctx.canvas.height;
+
+            let myProjectile = new projectile(xVelocity, yVelocity, 5);
             ctx.moveTo(0,0);
             while (myProjectile.y >= 0) {
+                ctx.beginPath();
                 ctx.rect(myProjectile.x, canvasHeight - myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
                 ctx.stroke();
                 myProjectile.advance();
@@ -55,6 +54,7 @@
 <form>
     Launch Angle: <input type="text" id="launchAngle" placeholder="45">
     Velocity: <input type="text" id="velocity" placeholder="50">
+    Initials: <input type="text" id="initials" placeholder="DMC">
     <button id="newTrajectoryButton">New Trajectory</button>
 </form>
 
@@ -78,7 +78,7 @@
     <table>
         <% trajectories.forEach(function(entry) { %>
         <tr>
-            <td><input type="checkbox" name="trajectoryCheckbox"></td>
+            <td><input type="checkbox" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'></td>
             <td><%= entry["shot_angle"] %></td>
             <td><%= entry["shot_velocity"] %></td>
         </tr>
@@ -87,6 +87,26 @@
     <button id="simulateTrajectoriesButton">Simulate Trajectories</button>
 </form>
 
+<script>
+    let simulateTrajectoriesButton = document.getElementById("simulateTrajectoriesButton");
+    simulateTrajectoriesButton.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        let myCanvas = document.getElementById("simCanvas");
+        let ctx = myCanvas.getContext("2d");
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.stroke();
+
+        let checkedBoxes = document.querySelectorAll('input[name=trajectoryCheckbox]:checked');
+        console.log(checkedBoxes);
+        checkedBoxes.forEach((trajectory) => {
+            plotTrajectory(ctx, trajectory.getAttribute("data-shotAngle"), trajectory.getAttribute("data-velocity"));
+            console.log(`Plotting the trajectory: ${trajectory.getAttribute("data-shotAngle")}, ${trajectory.getAttribute("data-velocity")}`);
+        })
+
+    })
+
+</script>
 
 
 </body>
