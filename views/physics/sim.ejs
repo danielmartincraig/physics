@@ -74,16 +74,20 @@
     });
 </script>
 
-<div id="trajectoryHistory">
+<form name="trajectoryHistory">
     <table>
         <% trajectories.forEach(function(entry) { %>
         <tr>
-            <td><input type="checkbox"></td>
+            <td><input type="checkbox" name="trajectoryCheckbox"></td>
             <td><%= entry["shot_angle"] %></td>
             <td><%= entry["shot_velocity"] %></td>
         </tr>
         <% }) %>
     </table>
-</div>
+    <button id="simulateTrajectoriesButton">Simulate Trajectories</button>
+</form>
+
+
+
 </body>
 </html>
