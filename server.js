@@ -67,29 +67,16 @@ app.use(function (req, res) {
 app.listen(PORT);
 
 function handleTrajectoriesRequest(req, res) {
-    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity FROM trajectories LIMIT 10";
+    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity FROM trajectories";
 
     pool.query(trajectoriesQuery, function (err, result) {
         if (err) {
-
         }
         else {
             app.locals.trajectories = result.rows;
         }
 
         res.render('physics/sim');
-    });
-}
-
-function handleHighScoresRequest(req, res) {
-    let highScoresQuery = "SELECT final_distance, player_initials FROM highscores h INNER JOIN trajectories t " +
-        "ON h.trajectory_id = t.id";
-    pool.query(highScoresQuery, function (err, result) {
-        if (err) {
-            throw err;
-        }
-        app.locals.highscores = result.rows;
-        res.render('physics/highscores');
     });
 }
 

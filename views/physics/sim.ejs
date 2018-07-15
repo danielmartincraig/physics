@@ -15,7 +15,7 @@
             ctx.moveTo(0,0);
             while (myProjectile.y >= 0) {
                 ctx.beginPath();
-                ctx.rect(myProjectile.x, canvasHeight - myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
+                ctx.rect(myProjectile.x + 20, canvasHeight - myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
                 ctx.stroke();
                 myProjectile.advance();
             }
@@ -106,6 +106,9 @@
 
 </script>
 
+<script>
+    document.getElementById("simulateTrajectoriesButton").click();
+</script>
 
 </body>
 </html>
