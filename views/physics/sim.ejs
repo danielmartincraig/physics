@@ -66,11 +66,18 @@
 
         let request = new XMLHttpRequest();
 
+        request.onreadystatechange = function() {
+            if(request.readyState === 4 && request.status === 200) {
+                location.reload();
+            }
+        }
+
         request.open("post", "https://agile-depths-52131.herokuapp.com/sim", true);
         request.setRequestHeader("Content-type", "application/json");
         let data = JSON.stringify({"launchAngle":launchAngle, "velocity": velocity});
         request.send(data);
     });
+
 </script>
 
 <form name="trajectoryHistory">
@@ -90,6 +97,18 @@
     simulateTrajectoriesButton.addEventListener('click', function (e) {
         e.preventDefault();
 
+
+
+    })
+
+</script>
+
+<script>
+    document.getElementById("simulateTrajectoriesButton").click();
+</script>
+
+<script>
+    $(":checkbox").change(function() {
         let myCanvas = document.getElementById("simCanvas");
         let ctx = myCanvas.getContext("2d");
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
@@ -101,13 +120,7 @@
             plotTrajectory(ctx, trajectory.getAttribute("data-shotAngle"), trajectory.getAttribute("data-velocity"));
             console.log(`Plotting the trajectory: ${trajectory.getAttribute("data-shotAngle")}, ${trajectory.getAttribute("data-velocity")}`);
         })
-
-    })
-
-</script>
-
-<script>
-    document.getElementById("simulateTrajectoriesButton").click();
+    });
 </script>
 
 </body>
