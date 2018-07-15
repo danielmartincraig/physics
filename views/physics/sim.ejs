@@ -54,7 +54,6 @@
 <form>
     Launch Angle: <input type="text" id="launchAngle" placeholder="45">
     Velocity: <input type="text" id="velocity" placeholder="50">
-    Initials: <input type="text" id="initials" placeholder="DMC">
     <button id="newTrajectoryButton">New Trajectory</button>
 </form>
 
@@ -79,8 +78,7 @@
         <% trajectories.forEach(function(entry) { %>
         <tr>
             <td><input type="checkbox" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'></td>
-            <td><%= entry["shot_angle"] %></td>
-            <td><%= entry["shot_velocity"] %></td>
+            <td><p> <%= entry["shot_angle"] %>&deg,  Velocity = <%= entry["shot_velocity"] %></p></td>
         </tr>
         <% }) %>
     </table>
