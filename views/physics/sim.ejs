@@ -4,6 +4,25 @@
     <% include ../partials/header.ejs %>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
+    <script>
+        function plotTrajectory(launchAngle, velocity) {
+            let myCanvas = document.getElementById("simCanvas");
+            let canvasHeight = myCanvas.clientHeight;
+            let ctx = myCanvas.getContext("2d");
+
+            let xVelocity = Math.cos(launchAngle * Math.PI / 180) * velocity;
+            let yVelocity = Math.cos(launchAngle * Math.PI / 180) * velocity;
+
+            let myProjectile = new projectile(xVelocity, yVelocity, 10);
+            ctx.moveTo(0,0);
+            while (myProjectile.y >= 0) {
+                ctx.rect(myProjectile.x, canvasHeight - myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
+                ctx.stroke();
+                myProjectile.advance();
+            }
+        }
+    </script>
+
 </head>
 <body>
 <% include ../partials/nav.ejs %>
@@ -15,16 +34,10 @@
 
 <script>
 
-    let myCanvas = document.getElementById("simCanvas");
-    let canvasHeight = myCanvas.clientHeight;
-    let canvasWidth = myCanvas.clientWidth;
-    let squareSize = 20;
-    let ctx = myCanvas.getContext("2d");
-
     class projectile {
-        constructor (x, y, vx, vy, squareSize) {
-            this.x = x;
-            this.y = y
+        constructor (vx, vy, squareSize) {
+            this.x = 0;
+            this.y = squareSize;
             this.vx = vx;
             this.vy = vy;
             this.squareSize = squareSize
@@ -37,28 +50,17 @@
         }
     }
 
-    let myProjectile = new projectile(20, (canvasHeight - squareSize - 20), 5, 5, 20);
-
-    while (myProjectile.y >= 0) {
-        ctx.rect(myProjectile.x, myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
-        ctx.stroke();
-    }
-
-
-
 </script>
 
 <form>
     Launch Angle: <input type="text" id="launchAngle" placeholder="45">
     Velocity: <input type="text" id="velocity" placeholder="50">
-    <button id="launchButton">LAUNCH!</button>
+    <button id="newTrajectoryButton">New Trajectory</button>
 </form>
 
 <script>
-    let launchButton = document.getElementById("launchButton");
-    launchButton.addEventListener('click', function(e) {
-        console.log("The launch button has been clicked");
-
+    let newTrajectoryButton = document.getElementById("newTrajectoryButton");
+    newTrajectoryButton.addEventListener('click', function(e) {
         e.preventDefault();
         let launchAngle = document.getElementById("launchAngle").value;
         let velocity = document.getElementById("velocity").value;
