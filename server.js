@@ -65,7 +65,7 @@ app.get('/sim', handleTrajectoriesRequest)
 app.listen(PORT);
 
 function handleTrajectoriesRequest(req, res) {
-    let trajectoriesQuery = "SELECT shot_angle, shot_velocity FROM trajectories LIMIT 10";
+    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity FROM trajectories LIMIT 10";
 
     pool.query(trajectoriesQuery, function (err, result) {
         if (err) {
