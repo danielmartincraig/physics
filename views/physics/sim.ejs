@@ -9,21 +9,22 @@
 
 <h1>Physics Simulation!</h1>
 
-<% let canvasWidth=600;
-   let canvasHeight=400; %>
-
-<div><canvas id="simCanvas" width=<%canvasWidth%> height=<%canvasHeight%>>
-
+<div><canvas id="simCanvas" width=600 height=400>
     </canvas></div>
 
 <script>
+
     let myCanvas = document.getElementById("simCanvas");
+    let canvasHeight = myCanvas.clientHeight;
+    let canvasWidth = myCanvas.clientWidth;
+
     let ctx = myCanvas.getContext("2d");
 
+    let squareSize = 20;
     let x = 0;
-    let y = 0;
+    let y = squareSize;
 
-    ctx.rect(x,y,20,20);
+    ctx.rect(x, (canvasHeight - y), squareSize, squareSize);
     ctx.stroke();
 </script>
 
