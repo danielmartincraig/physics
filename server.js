@@ -17,7 +17,6 @@ app.use(express.static(path.join(__dirname, 'public')))
     .set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.render('physics/index'))
-    .get('/highscores', handleHighScoresRequest)
     .get('/quotes', handleQuotesRequest);
 
 app.get('/sim', handleTrajectoriesRequest)
