@@ -60,6 +60,9 @@ app.get('/sim', handleTrajectoriesRequest)
         });
     });
 
+app.use(function (req, res) {
+    res.send(404);
+});
 
 app.listen(PORT);
 
