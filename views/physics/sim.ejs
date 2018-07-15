@@ -22,6 +22,23 @@
         }
     </script>
 
+    <script>
+        function drawTrajectories () {
+            let myCanvas = document.getElementById("simCanvas");
+            let ctx = myCanvas.getContext("2d");
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            ctx.stroke();
+
+            let checkedBoxes = document.querySelectorAll('input[name=trajectoryCheckbox]:checked');
+            console.log(checkedBoxes);
+            checkedBoxes.forEach((trajectory) => {
+                plotTrajectory(ctx, trajectory.getAttribute("data-shotAngle"), trajectory.getAttribute("data-velocity"));
+                console.log(`Plotting the trajectory: ${trajectory.getAttribute("data-shotAngle")}, ${trajectory.getAttribute("data-velocity")}`);
+            })
+        }
+
+    </script>
+
 </head>
 <body>
 <% include ../partials/nav.ejs %>
@@ -89,38 +106,16 @@
         </tr>
         <% }) %>
     </table>
-    <button id="simulateTrajectoriesButton">Simulate Trajectories</button>
 </form>
 
 <script>
-    let simulateTrajectoriesButton = document.getElementById("simulateTrajectoriesButton");
-    simulateTrajectoriesButton.addEventListener('click', function (e) {
-        e.preventDefault();
-
-
-
-    })
-
-</script>
-
-<script>
-    document.getElementById("simulateTrajectoriesButton").click();
-</script>
-
-<script>
     $(":checkbox").change(function() {
-        let myCanvas = document.getElementById("simCanvas");
-        let ctx = myCanvas.getContext("2d");
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-        ctx.stroke();
-
-        let checkedBoxes = document.querySelectorAll('input[name=trajectoryCheckbox]:checked');
-        console.log(checkedBoxes);
-        checkedBoxes.forEach((trajectory) => {
-            plotTrajectory(ctx, trajectory.getAttribute("data-shotAngle"), trajectory.getAttribute("data-velocity"));
-            console.log(`Plotting the trajectory: ${trajectory.getAttribute("data-shotAngle")}, ${trajectory.getAttribute("data-velocity")}`);
-        })
+        drawTrajectories();
     });
+</script>
+
+<script>
+    drawTrajectories();
 </script>
 
 </body>
