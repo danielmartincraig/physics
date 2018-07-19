@@ -28,7 +28,7 @@
             let myCanvas = document.getElementById("simCanvas");
             myCanvas.width = '800';
             myCanvas.height = '400';
-            myCanvas.setAttribute("class", "img-responsive center-block");
+
             let ctx = myCanvas.getContext("2d");
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.stroke();
@@ -46,9 +46,9 @@
 <body>
 <% include ../partials/nav.ejs %>
 
-<h1>Physics Simulation!</h1>
+<h1>Physics Simulation</h1>
 
-<div><canvas id="simCanvas">
+<div><canvas id="simCanvas" class= "img-responsive center-block">
     </canvas></div>
 
 <script>
@@ -71,12 +71,14 @@
 
 </script>
 
-<form>
-    Launch Angle: <input type="text" id="launchAngle" placeholder="45">
-    Velocity: <input type="text" id="velocity" placeholder="50">
-    <button id="newTrajectoryButton">New Trajectory</button>
-    <button id="clearTrajectoriesButton">Clear Trajectories</button>
-</form>
+<div align="center">
+    <form>
+        Launch Angle: <input type="text" id="launchAngle" placeholder="45">
+        Velocity: <input type="text" id="velocity" placeholder="50">
+        <button id="newTrajectoryButton">New Trajectory</button>
+        <button id="clearTrajectoriesButton">Clear Trajectories</button>
+    </form>
+</div>
 
 <script>
     let newTrajectoryButton = document.getElementById("newTrajectoryButton");
@@ -119,8 +121,8 @@
     });
 </script>
 
-
-<div class="form-check form-check-inline" name="trajectoryHistory">
+<div class="container" align="center">
+    <form class="form-check form-check-inline">
     <% trajectories.forEach(function(entry) { %>
 
     <label class="btn btn-primary">
@@ -130,8 +132,9 @@
     </label>
 
     <% }) %>
-</div>
+    </form>
 
+</div>
 <script>
     $(":checkbox").change(function() {
         drawTrajectories();
