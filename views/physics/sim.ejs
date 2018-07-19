@@ -30,8 +30,13 @@
             myCanvas.height = '400';
 
             let ctx = myCanvas.getContext("2d");
-            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
-            ctx.stroke();
+
+            var grd=ctx.createLinearGradient(0,ctx.canvas.height,0,0);
+            grd.addColorStop(0,"PowderBlue");
+            grd.addColorStop(1,"white");
+
+            ctx.fillStyle=grd;
+            ctx.fillRect(0, 0, ctx.canvas.width,ctx.canvas.height);
 
             let checkedBoxes = document.querySelectorAll('input[name=trajectoryCheckbox]:checked');
             checkedBoxes.forEach((trajectory) => {
