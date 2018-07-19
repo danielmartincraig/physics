@@ -21,7 +21,6 @@ app.get('/', (req, res) => res.render('physics/index'))
 
 app.get('/sim', handleTrajectoriesRequest)
     .post('/sim', (req, res) => {
-        console.log("Hello");
         /*sanitizeBody(req.body, (req, res, next) => {
             const errors = validationResult(req);
 
@@ -58,7 +57,8 @@ app.get('/sim', handleTrajectoriesRequest)
             }
             handleTrajectoriesRequest(req, res);
         });
-    });
+    })
+    .delete('/sim', handleClearTrajectoriesRequest);
 
 app.use(function (req, res) {
     res.send(404);
@@ -80,8 +80,8 @@ function handleTrajectoriesRequest(req, res) {
     });
 }
 
-function handleClearTrajectoriesRequest() {
-    let clearTrajectoriesString = "TRUNCATE trajectories";
+function handleClearTrajectoriesRequest(req, res) {
+    let clearTrajectoriesString = "TRUNCATE trajectories CASCADE";
 
     pool.query(clearTrajectoriesString, function (err, result) {
         if (err) {
