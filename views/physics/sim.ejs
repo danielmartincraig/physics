@@ -122,9 +122,13 @@
 
 <div class="form-check form-check-inline" name="trajectoryHistory">
     <% trajectories.forEach(function(entry) { %>
+
+    <label class="btn btn-primary">
     <input type="checkbox" class="form-check-input" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'>
     <p> <%= entry["shot_angle"] %>&deg </p>
     <p> <%= entry["shot_velocity"] %> mps </p>
+    </label>
+
     <% }) %>
 </div>
 
