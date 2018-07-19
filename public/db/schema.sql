@@ -17,7 +17,7 @@ CREATE TABLE highscores
 , duration INTEGER
 , final_distance INTEGER
 , creation_date DATE NOT NULL
-, creation_time TIMESTAMP NOT NULL
+, creation_time TIMES NOT NULL
 );
 
 CREATE TABLE quotes
@@ -25,6 +25,6 @@ CREATE TABLE quotes
 , quote_text TEXT
 , quote_author TEXT
 , creation_date DATE NOT NULL
-, creation_time TIMESTAMP NOT NULL
+, creation_time TIME NOT NULL
 );
 

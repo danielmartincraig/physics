@@ -15,6 +15,7 @@
     "express": "^4.16.3",
     "express-validator": "^5.2.0",
     "nodemon": "^1.18.2",
-    "pg": "^7.4.3"
+    "pg": "^7.4.3",
+    "sanitize": "^2.1.0"
   }
 }

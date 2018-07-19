@@ -11,12 +11,26 @@ const connectionString = process.env.DATABASE_URL;
 const pool = new Pool({connectionString: connectionString});
 
 app.use(express.static(path.join(__dirname, 'public')))
+    .use(require('sanitize').middleware)
     .use(bodyParser.json())
     .use(bodyParser.urlencoded({extended: true}))
     .set('views', path.join(__dirname, 'views'))
     .set('view engine', 'ejs');
 
 app.get('/', (req, res) => res.render('physics/index'))
+    .post('/quotes', (req, res) => {
+        let quote_text = req.bodyString('quote_text');
+        let quote_author = req.bodyString('quote_author');
+
+        let myInsert = `INSERT INTO quotes (quote_text, quote_author, creation_date, creation_time) VALUES ('${quote_text}', '${quote_author}', current_date, current_time)`;
+
+        pool.query(myInsert, function (err, result) {
+            if (err) {
+
+            }
+            handleQuotesRequest(req, res);
+        });
+    })
     .get('/quotes', handleQuotesRequest);
 
 app.get('/sim', handleTrajectoriesRequest)
@@ -45,8 +59,8 @@ app.get('/sim', handleTrajectoriesRequest)
             }
         }).escape();*/
 
-        let velocity = encodeURI(req.body.velocity);
-        let launchAngle = encodeURI(req.body.launchAngle);
+        let velocity = req.bodyString('velocity');
+        let launchAngle = req.bodyString('launchAngle');
 
         let myInsert = `INSERT INTO trajectories (shot_angle, shot_velocity, creation_date, creation_time) VALUES ( ${launchAngle}, ${velocity}, current_date, current_time)`;
         console.log(myInsert);

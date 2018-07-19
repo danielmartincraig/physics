@@ -16,7 +16,7 @@
             ctx.moveTo(0,0);
             while (myProjectile.y >= 0) {
                 ctx.beginPath();
-                ctx.rect(myProjectile.x + 20, canvasHeight - myProjectile.y, myProjectile.squareSize, myProjectile.squareSize);
+                ctx.rect(myProjectile.x + 20, canvasHeight - myProjectile.y - 20, myProjectile.squareSize, myProjectile.squareSize);
                 ctx.stroke();
                 myProjectile.advance();
             }
@@ -128,15 +128,15 @@
 
 <div class="container" align="center">
     <form class="form-check form-check-inline">
-    <% trajectories.forEach(function(entry) { %>
+        <% trajectories.forEach(function(entry) { %>
 
-    <label class="btn btn-primary">
-    <input type="checkbox" class="form-check-input" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'>
-    <p> <%= entry["shot_angle"] %>&deg </p>
-    <p> <%= entry["shot_velocity"] %> mps </p>
-    </label>
+        <label class="btn btn-primary">
+            <input type="checkbox" class="form-check-input" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'>
+            <p> <%= entry["shot_angle"] %>&deg </p>
+            <p> <%= entry["shot_velocity"] %> mps </p>
+        </label>
 
-    <% }) %>
+        <% }) %>
     </form>
 
 </div>
