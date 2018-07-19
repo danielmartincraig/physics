@@ -101,12 +101,11 @@
 </script>
 
 <div class="form-check form-check-inline" name="trajectoryHistory">
-    <table>
-        <% trajectories.forEach(function(entry) { %>
-            <input type="checkbox" class="form-check-input" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'>
-            <p> <%= entry["shot_angle"] %>&deg,  Velocity = <%= entry["shot_velocity"] %></p>
-        <% }) %>
-    </table>
+    <% trajectories.forEach(function(entry) { %>
+    <input type="checkbox" class="form-check-input" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'>
+    <p> <%= entry["shot_angle"] %>&deg </p>
+    <p> <%= entry["shot_velocity"] %> mps </p>
+    <% }) %>
 </div>
 
 <script>

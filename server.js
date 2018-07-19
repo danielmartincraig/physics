@@ -67,13 +67,24 @@ app.use(function (req, res) {
 app.listen(PORT);
 
 function handleTrajectoriesRequest(req, res) {
-    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity FROM trajectories";
+    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity FROM trajectories LIMIT 10";
 
     pool.query(trajectoriesQuery, function (err, result) {
         if (err) {
         }
         else {
             app.locals.trajectories = result.rows;
+        }
+
+        res.render('physics/sim');
+    });
+}
+
+function handleClearTrajectoriesRequest() {
+    let clearTrajectoriesString = "TRUNCATE trajectories";
+
+    pool.query(clearTrajectoriesString, function (err, result) {
+        if (err) {
         }
 
         res.render('physics/sim');
