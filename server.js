@@ -48,7 +48,7 @@ app.get('/sim', handleTrajectoriesRequest)
         let velocity = encodeURI(req.body.velocity);
         let launchAngle = encodeURI(req.body.launchAngle);
 
-        let myInsert = `INSERT INTO trajectories (shot_angle, shot_velocity) VALUES ( ${launchAngle}, ${velocity})`;
+        let myInsert = `INSERT INTO trajectories (shot_angle, shot_velocity, creation_date, creation_time) VALUES ( ${launchAngle}, ${velocity}, current_date, current_time)`;
         console.log(myInsert);
 
         pool.query(myInsert, function (err, result) {
@@ -67,7 +67,7 @@ app.use(function (req, res) {
 app.listen(PORT);
 
 function handleTrajectoriesRequest(req, res) {
-    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity FROM trajectories LIMIT 10";
+    let trajectoriesQuery = "SELECT DISTINCT shot_angle, shot_velocity, creation_date, creation_time FROM trajectories ORDER BY creation_date, creation_time DESC LIMIT 10";
 
     pool.query(trajectoriesQuery, function (err, result) {
         if (err) {

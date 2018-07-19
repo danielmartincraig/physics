@@ -4,8 +4,10 @@ DROP TABLE trajectories;
 
 CREATE TABLE trajectories
 ( id SERIAL PRIMARY KEY
-, shot_angle INTEGER
-, shot_velocity INTEGER
+, shot_angle INTEGER NOT NULL
+, shot_velocity INTEGER NOT NULL
+, creation_date DATE NOT NULL
+, creation_time TIME NOT NULL
 );
 
 CREATE TABLE highscores
@@ -14,11 +16,15 @@ CREATE TABLE highscores
 , player_initials VARCHAR(3)
 , duration INTEGER
 , final_distance INTEGER
+, creation_date DATE NOT NULL
+, creation_time TIMESTAMP NOT NULL
 );
 
 CREATE TABLE quotes
 ( id SERIAL PRIMARY KEY
 , quote_text TEXT
 , quote_author TEXT
+, creation_date DATE NOT NULL
+, creation_time TIMESTAMP NOT NULL
 );
 
