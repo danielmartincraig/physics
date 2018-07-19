@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous">
     <% include ../partials/header.ejs %>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 
@@ -25,12 +26,14 @@
     <script>
         function drawTrajectories () {
             let myCanvas = document.getElementById("simCanvas");
+            myCanvas.width = '800';
+            myCanvas.height = '400';
+            myCanvas.setAttribute("class", "img-responsive center-block");
             let ctx = myCanvas.getContext("2d");
             ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
             ctx.stroke();
 
             let checkedBoxes = document.querySelectorAll('input[name=trajectoryCheckbox]:checked');
-            console.log(checkedBoxes);
             checkedBoxes.forEach((trajectory) => {
                 plotTrajectory(ctx, trajectory.getAttribute("data-shotAngle"), trajectory.getAttribute("data-velocity"));
                 console.log(`Plotting the trajectory: ${trajectory.getAttribute("data-shotAngle")}, ${trajectory.getAttribute("data-velocity")}`);
@@ -45,7 +48,7 @@
 
 <h1>Physics Simulation!</h1>
 
-<div><canvas id="simCanvas" width=600 height=400>
+<div><canvas id="simCanvas">
     </canvas></div>
 
 <script>
@@ -97,16 +100,14 @@
 
 </script>
 
-<form name="trajectoryHistory">
+<div class="form-check form-check-inline" name="trajectoryHistory">
     <table>
         <% trajectories.forEach(function(entry) { %>
-        <tr>
-            <td><input type="checkbox" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'></td>
-            <td><p> <%= entry["shot_angle"] %>&deg,  Velocity = <%= entry["shot_velocity"] %></p></td>
-        </tr>
+            <input type="checkbox" class="form-check-input" name="trajectoryCheckbox" data-shotAngle='<%= entry["shot_angle"]%>' data-velocity='<%= entry["shot_velocity"]%>'>
+            <p> <%= entry["shot_angle"] %>&deg,  Velocity = <%= entry["shot_velocity"] %></p>
         <% }) %>
     </table>
-</form>
+</div>
 
 <script>
     $(":checkbox").change(function() {
@@ -117,6 +118,10 @@
 <script>
     drawTrajectories();
 </script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js" integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em" crossorigin="anonymous"></script>
 
 </body>
 </html>
