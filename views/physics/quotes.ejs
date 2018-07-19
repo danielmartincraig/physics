@@ -9,8 +9,10 @@
 <h1>Classic Physics Quotes!</h1>
 
 <% quotes.forEach(function(entry) { %>
-<h1><%= entry["quote_text"] %></h1>
-<p><%= entry["quote_author"] %></p>
+<blockquote class="blockquote"
+    <h1>"<%= entry["quote_text"] %>"</h1>
+    <p>-<%= entry["quote_author"] %></p>
+</blockquote>
 <% }) %>
 
 <form>
